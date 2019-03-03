@@ -90,7 +90,7 @@ class Genetic():
                 # get random number
                 mut = random.randint(1,100)
                 # see if random number is less than or equal to mutation rate
-                if mut <= self.mutation_rate:
+                if mut <= self.mutation_rate*100:
                     # mutate character - grab random characther from char array
                     mutated_child += char_array[random.randint(0,len(char_array)-1)]
                 else:
@@ -104,7 +104,7 @@ class Genetic():
 def main():
     phrase = 'genetic programming is the bomb'
     population_size = 3000
-    mutation = 1
+    mutation = .01
     characters = 'abcdefghijklmnopqrstuvwxyz '
     genetic = Genetic(phrase, population_size, mutation, characters)
     genetic.run()
