@@ -9,7 +9,7 @@ class Genetic():
         self.population = []
 
     def run(self):
-        self.create_initial_pool()
+        self.__create_initial_pool()
         generations = 0
 
         # loop through each generation
@@ -24,19 +24,18 @@ class Genetic():
             if found:
                 break
 
-            mating_pool = self.mating_pool()         
-            self.reproduction(mating_pool)        
+            mating_pop = self.__mating_population()         
+            self.__reproduction(mating_pop)        
             generations += 1
     
     # randomly create the initial population
-    def create_initial_pool(self):        
-        len_letters = len(self.characters)
+    def __create_initial_pool(self):               
         # loop for number of phrases in population
         for _ in range(self.population_size):
             phrase = ''
             # create a phrase
             for _ in range(len(self.phrase)):
-                num = random.randint(0,len_letters-1)
+                num = random.randint(0,len(self.characters)-1)
                 phrase += self.characters[num]
 
             #self.population.append("".join(str(x) for x in pool_phrase))        
@@ -44,7 +43,7 @@ class Genetic():
 
     # fitness factor
     # based of number of matched characters divided by total characters
-    def fitness(self, pool_phrase):
+    def __fitness(self, pool_phrase):
         fitness = 0
         total = len(self.phrase)
         for i in range(len(self.phrase)):
@@ -57,26 +56,26 @@ class Genetic():
     #       based on percentage of fitness factor out of 100
     #       example: fitness factory of .50 will add that phrase
     #                   50 times to mating pool
-    def mating_pool(self):
-        mating_pool = []
+    def __mating_population(self):
+        mating_pop = []
 
         for p in self.population:
-            fit = self.fitness(p)
+            fit = self.__fitness(p)
             # print(fit)
             for _ in range(int(fit*100)):
-                mating_pool.append(p)
+                mating_pop.append(p)
         
-        return mating_pool
+        return mating_pop
 
     # use the mating pool to create a child poplation
-    def reproduction(self, mating_pool):               
+    def __reproduction(self, mating_pop):               
         new_population = []
 
         # loop for population size
         for _ in range(self.population_size):
             # randomly get the mom and date from mating pool
-            mom = mating_pool[random.randint(0,len(mating_pool)-1)]
-            dad = mating_pool[random.randint(0,len(mating_pool)-1)]
+            mom = mating_pop[random.randint(0,len(mating_pop)-1)]
+            dad = mating_pop[random.randint(0,len(mating_pop)-1)]
 
             # randomly get index to split mom and dad for combination
             slice_point = random.randint(0,len(mom))
