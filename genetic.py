@@ -29,19 +29,19 @@ class Genetic():
             generations += 1
     
     # randomly create the initial population
-    def create_initial_pool(self):
-        char_array = [a for a in self.characters]
-        len_letters = len(char_array)
+    def create_initial_pool(self):        
+        len_letters = len(self.characters)
         # loop for number of phrases in population
         for _ in range(self.population_size):
-            pool_phrase = []
+            phrase = ''
             # create a phrase
             for _ in range(len(self.phrase)):
                 num = random.randint(0,len_letters-1)
-                pool_phrase.append(char_array[num])
+                phrase += self.characters[num]
 
-            self.population.append("".join(str(x) for x in pool_phrase))        
-    
+            #self.population.append("".join(str(x) for x in pool_phrase))        
+            self.population.append(phrase)
+
     # fitness factor
     # based of number of matched characters divided by total characters
     def fitness(self, pool_phrase):
@@ -69,8 +69,7 @@ class Genetic():
         return mating_pool
 
     # use the mating pool to create a child poplation
-    def reproduction(self, mating_pool):        
-        char_array = [a for a in self.characters]       
+    def reproduction(self, mating_pool):               
         new_population = []
 
         # loop for population size
@@ -92,7 +91,7 @@ class Genetic():
                 # see if random number is less than or equal to mutation rate
                 if mut <= self.mutation_rate*100:
                     # mutate character - grab random characther from char array
-                    mutated_child += char_array[random.randint(0,len(char_array)-1)]
+                    mutated_child += self.characters[random.randint(0,len(self.characters)-1)]
                 else:
                     mutated_child += char
             
